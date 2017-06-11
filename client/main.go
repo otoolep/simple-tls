@@ -14,22 +14,19 @@ func main() {
 
 	conn, err := tls.Dial("tcp", "127.0.0.1:4443", conf)
 	if err != nil {
-		log.Println(err)
-		return
+		log.Fatal(err)
 	}
 	defer conn.Close()
 
 	n, err := conn.Write([]byte("hello\n"))
 	if err != nil {
-		log.Println(n, err)
-		return
+		log.Fatal(err)
 	}
 
 	buf := make([]byte, 100)
 	n, err = conn.Read(buf)
 	if err != nil {
-		log.Println(n, err)
-		return
+		log.Fatal(err)
 	}
 
 	println(string(buf[:n]))
