@@ -12,15 +12,13 @@ func main() {
 
 	cer, err := tls.LoadX509KeyPair("cert.pem", "key.pem")
 	if err != nil {
-		log.Println(err)
-		return
+		log.Fatal(err)
 	}
 
 	config := &tls.Config{Certificates: []tls.Certificate{cer}}
 	ln, err := tls.Listen("tcp", ":4443", config)
 	if err != nil {
-		log.Println(err)
-		return
+		log.Fatal(err)
 	}
 	defer ln.Close()
 
@@ -40,16 +38,14 @@ func handleConnection(conn net.Conn) {
 	for {
 		msg, err := r.ReadString('\n')
 		if err != nil {
-			log.Println(err)
-			return
+			log.Fatal(err)
 		}
 
 		println(msg)
 
 		n, err := conn.Write([]byte("world\n"))
 		if err != nil {
-			log.Println(n, err)
-			return
+			log.Fatal(err)
 		}
 	}
 }
