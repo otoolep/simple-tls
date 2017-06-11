@@ -43,7 +43,7 @@ func handleConnection(conn net.Conn) {
 
 		println(msg)
 
-		n, err := conn.Write([]byte("world\n"))
+		_, err = conn.Write([]byte("world\n"))
 		if err != nil {
 			log.Fatal(err)
 		}
